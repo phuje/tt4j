@@ -40,6 +40,8 @@ implements ExecutableResolver
 	protected PlatformDetector _platform;
 	protected List<String> _additionalPaths = new ArrayList<String>();
 
+	protected String executableFileName;
+
 	public
 	void destroy()
 	{
@@ -71,7 +73,13 @@ implements ExecutableResolver
 				continue;
 			}
 
-			final File exe = new File(p+separator+"tree-tagger"+_platform.getExecutableSuffix());
+			//final File exe = new File(p+separator+"tree-tagger"+_platform.getExecutableSuffix());
+			if(executableFileName == null){
+				System.out.println("executableFileName null");
+				executableFileName = "tree-tagger";
+			}
+
+			final File exe = new File(p + separator + executableFileName + _platform.getExecutableSuffix());
 			searchedIn.add(exe.getAbsolutePath());
 			if (exe.exists()) {
 				return exe.getAbsolutePath();
@@ -92,5 +100,16 @@ implements ExecutableResolver
 			final PlatformDetector aPlatform)
 	{
 		_platform = aPlatform;
+	}
+
+
+	/**
+	 * Set executable file name
+	 */
+	public
+	void setExecutableFileName(
+		String fileName)
+	{
+		executableFileName = fileName;
 	}
 }
